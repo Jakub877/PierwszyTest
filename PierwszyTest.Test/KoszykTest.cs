@@ -77,6 +77,22 @@ namespace PierwszyTest.Test
             logika.SprawdzCzySumaIlosciDwochTakichSamychProduktowWKoszyku();
         }
 
+        [TestMethod]
+        public void CzyBrakSumyIlosci_Jeżeli_DodamyInnyProduktJuzWystepujacyWKoszyku()
+        {
+            //Arrange
+            logika.UtworzKoszyk();
+            logika.StworzProdukt();
+            logika.StworzDrugiProdukt();
+            //Act
+            logika.DodajPierwszyProduktDoKoszyka();
+            logika.DodajDrugiProduktDoKoszyka();
+            logika.DodajPierwszyProduktDoKoszyka();
+
+            //Assert
+            logika.SprawdzCzyBrakSumyIlosciGdyDodamyInnyProduktJuzWystepujacyWKoszyku();
+        }
+
         public class Narzedzia
         {
             private Koszyk koszyk;
@@ -124,8 +140,15 @@ namespace PierwszyTest.Test
 
             public void SprawdzCzySumaIlosciDwochTakichSamychProduktowWKoszyku()
             {
-                int iloscProduktowWKoszyku = koszyk.Produkty.FirstOrDefault(p => p.Produkcik.Id == 1).Ilosc;
+                int iloscProduktowWKoszyku = koszyk.Produkty.Single().Ilosc;
+                //int iloscProduktowWKoszyku = koszyk.Produkty.First(p => p.Produkcik.Id == 1).Ilosc;
                 Assert.AreEqual(iloscProduktowWKoszyku, 2);
+            }
+
+            public void SprawdzCzyBrakSumyIlosciGdyDodamyInnyProduktJuzWystepujacyWKoszyku()
+            {
+                int iloscProduktowWKoszyku = koszyk.Produkty.First(p => p.Produkcik.Id == 2).Ilosc;
+                Assert.AreEqual(iloscProduktowWKoszyku, 1);
             }
         }
     }

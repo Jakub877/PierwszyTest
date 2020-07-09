@@ -35,6 +35,50 @@ namespace PierwszyTest
                 produktWKoszyku.Ilosc += ilosc;
         }
 
+        public bool UsunGornyProduktZKoszyka()
+        {
+            //szukamy pierwszego produktu na liście produktów w koszyku
+            //który ma takie samo Id jak produkt, który próbujemy dodać
+            //jeśli nie znajdziemy, wtedy prod będzie nullem
+            var produktWKoszyku = Produkty.ElementAtOrDefault(0);
+
+            //jeśli nie znaleźliśmy produktu, to dodajemy do koszyka
+            if (produktWKoszyku == null)
+            {
+                return false;
+            }
+                
+            //jeśli znaleźliśmy, wtedy zwiększamy ilość produktu w koszyku
+            else
+            {
+                Produkty.Remove(produktWKoszyku);
+                return true;
+            }
+                
+        }
+
+        public bool UsunWybranyProduktZKoszyka(Produkt produkt)
+        {
+            //szukamy pierwszego produktu na liście produktów w koszyku
+            //który ma takie samo Id jak produkt, który próbujemy dodać
+            //jeśli nie znajdziemy, wtedy prod będzie nullem
+            var produktWKoszyku = Produkty.FirstOrDefault(p => p.Produkcik.Id == produkt.Id);
+
+            //jeśli nie znaleźliśmy produktu, to dodajemy do koszyka
+            if (produktWKoszyku == null)
+            {
+                return false;
+            }
+
+            //jeśli znaleźliśmy, wtedy zwiększamy ilość produktu w koszyku
+            else
+            {
+                Produkty.Remove(produktWKoszyku);
+                return true;
+            }
+
+        }
+
         public void LINQ()
         {
             Produkty.First();
